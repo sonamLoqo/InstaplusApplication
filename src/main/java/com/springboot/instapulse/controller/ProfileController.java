@@ -1,22 +1,24 @@
 package com.springboot.instapulse.controller;
+
 import com.springboot.instapulse.model.Profile;
-import com.springboot.instapulse.Service.ProfileService;
+import com.springboot.instapulse.service.ProfileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 @RequestMapping("/api/profiles")
 @RestController
-
 public class ProfileController {
-    private final ProfileService profileService;
-    public ProfileController(ProfileService profileService) {
 
+    private final ProfileService profileService;
+
+    public ProfileController(ProfileService profileService) {
         this.profileService = profileService;
     }
+
     @PostMapping
     public ResponseEntity<?> addProfiles(@RequestBody List<Profile> profiles) {
         try {
@@ -39,18 +41,16 @@ public class ProfileController {
 
     @GetMapping("/verified")
     public List<Profile> getVerifiedProfiles() {
-
         return profileService.getVerifiedProfiles();
     }
 
     @GetMapping("/business")
     public List<Profile> getBusinessProfiles() {
-
         return profileService.getBusinessProfiles();
     }
 
     @GetMapping("/category/{category}")
-    public List<Profile>getProfilesByCategory(@PathVariable String category) {
+    public List<Profile> getProfilesByCategory(@PathVariable String category) {
         return profileService.searchByCategory(category);
     }
 
@@ -58,9 +58,48 @@ public class ProfileController {
     public List<Profile> getProfilesByHashtag(@PathVariable String hashtag) {
         return profileService.searchByHashtag(hashtag);
     }
-    @GetMapping("/unique_hashtags")
-    public Set<String> getUniqueHashtags() {
-        return profileService.getUniqueHashtags();
+
+    @GetMapping("/hashtags/unique")
+    public ResponseEntity<List<String>> getUniqueHashtags() {
+        List<String> hashtags = profileService.getUniqueHashtags();
+        return ResponseEntity.ok(hashtags);
+    }
+
+    @GetMapping("/search/username/contains")
+    public List<Profile> searchByUsernameContains(@RequestParam String keyword) {
+        return profileService.searchByUsernameContains(keyword);
+    }
+
+    @GetMapping("/search/username/prefix")
+    public List<Profile> searchByUsernamePrefix(@RequestParam String prefix) {
+        return profileService.searchByUsernamePrefix(prefix);
+    }
+
+    @GetMapping("/usernames/contain")
+    public List<String> getUsernamesByContain(@RequestParam String keyword) {
+        return profileService.getUsernamesByContain(keyword);
+    }
+
+    @GetMapping("/usernames/prefix")
+    public List<String> getUsernamesByPrefix(@RequestParam String prefix) {
+        return profileService.getUsernamesByPrefix(prefix);
+    }
+
+
+    @GetMapping("/uniqueCategories")
+    public ResponseEntity<List<String>> getUniqueCategories() {
+        return ResponseEntity.ok(profileService.getUniqueCategoryList());
+    }
+
+
+    @GetMapping("/searchByBio")
+    public List<Profile> searchByBio(@RequestParam String keyword) {
+        return profileService.searchByBioContains(keyword);
+    }
+
+    @GetMapping("/searchByFullName")
+    public List<Profile> searchByFullName(@RequestParam String keyword) {
+        return profileService.searchByFullNameContains(keyword);
     }
 
 }

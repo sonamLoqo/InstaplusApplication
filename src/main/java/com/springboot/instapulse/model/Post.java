@@ -15,11 +15,11 @@ import java.util.List;
 public class Post {
     @Id
     private String postId;
-    private String username;  // User who posted
-    private String caption;  // Caption of the post
-    private String imageUrl;  // Image or video URL
+    private String username;
+    private String caption;
+    private String imageUrl;
     private List<String> hashtags;
-    private List<String> mentions;  // Users mentioned in the post
+    private List<String> mentions;
 
     private int likes;
     private int comments;

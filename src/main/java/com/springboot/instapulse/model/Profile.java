@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -25,13 +24,13 @@ public class Profile {
     @Field(type = FieldType.Keyword)
     private String username;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Keyword)
     private String fullName;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Keyword)
     private String bio;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Keyword)
     private String category;
 
     @Field(type = FieldType.Text)
@@ -70,12 +69,6 @@ public class Profile {
     @Field(type = FieldType.Boolean)
     private boolean isPrivate;
 
-
     @Field(type = FieldType.Keyword)
-    @JsonProperty("hashtagsUsed")
     private List<String> hashtags;
-
-    public List<String> getHashtags() {
-        return hashtags;
-    }
 }
